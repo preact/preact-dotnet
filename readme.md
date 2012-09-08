@@ -5,6 +5,19 @@ Allow your .NET app to easily submit server-side messages and events to LessNegl
 Usage
 ---
 
+Add your project code and secret to your web.config:
+
+```xml
+  <appSettings>
+    ...
+    <add key="LessNeglectProjectCode" value="asdfasdf"/>
+    <add key="LessNeglectProjectApiSecret" value="asdfasdf12341234"/>
+    ...
+  </appSettings>
+```
+
+Then, log events as they happen using the client:
+
 ```csharp
   LessNeglect.LessNeglectApi.Client.CreateActionEvent(new LessNeglect.ActionEventCreateRequest()
   {
