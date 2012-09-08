@@ -1,4 +1,4 @@
-LessNeglect Ruby Client
+LessNeglect C# Client
 ===
 Allow your .NET app to easily submit server-side messages and events to LessNeglect.
 
@@ -110,6 +110,4 @@ public static class Neglect
 }
 ```
 
-Copyright
-===
 Copyright (c) 2011-2012 Christopher Gooley. See LICENSE.txt for further details.
