@@ -16,6 +16,8 @@ Add your project code and secret to your web.config:
   </appSettings>
 ```
 
+Add a Reference to the LessNeglect library in your Project (either directly to the source, or compile it first and include the .dll)
+
 Then, log events as they happen using the client:
 
 ```csharp
