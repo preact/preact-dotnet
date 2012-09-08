@@ -34,12 +34,7 @@ namespace LessNeglect
 {
     public class LessNeglectApi
     {
-
-#if DEBUG
-        private static string api_endpoint = "http://test.lessneglect.com:4000/api/v2";
-#else
-        private static string api_endpoint = "http://beta.lessneglect.com/api/v2";
-#endif
+        private static string api_endpoint = "https://lessneglect.com/api/v2";
         private static Encoding encoding = Encoding.UTF8;
 
         private string ProjectCode { get; set; }
