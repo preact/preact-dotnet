@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TestLogger
 {
-
     public class UserInfo
     {
         public string Username { get; set; }
@@ -40,9 +39,6 @@ namespace TestLogger
             }
             catch (Exception ex)
             {
-#if DEBUG
-                throw ex;
-#endif
             }
         }
 
@@ -58,9 +54,6 @@ namespace TestLogger
             }
             catch (Exception ex)
             {
-#if DEBUG
-                throw ex;
-#endif
             }
 
         }

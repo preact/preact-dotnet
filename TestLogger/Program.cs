@@ -12,19 +12,24 @@ namespace TestLogger
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("started");
+            if (System.Configuration.ConfigurationManager.AppSettings["LessNeglectProjectCode"] == "RMso4Te6Atof")
+            {
+                Console.WriteLine("-------------\r\nNOTE: You should update the App.config to use your own code and key\r\n-------------\r\n");
+            }
 
             var u = new UserInfo()
             {
                 FullName = "Christopher Gooley",
-                Email = "thegooley1@gmail.com",
+                Email = "gooley@lessneglect.com",
                 Username = "cgooley",
-                AccountId = "cool_account",
-                AccountName = "Cool Account",
-                DateCreated = DateTime.Now
+
+                AccountId = "1234",
+                AccountName = "Account 1234",
+
+                DateCreated = new DateTime(2012,5,1,13,5,22)
             };
 
-            Neglect.LogEvent(u, "tester-launched", "1234");
+            Neglect.LogEvent(u, "tester-launched");
             Console.WriteLine("What event would you like to log?\r\n(e.g. uploaded:picture, viewed:publisher, deleted:friend)\r\n");
                 
             while (true)
