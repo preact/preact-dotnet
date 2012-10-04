@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2011-2012 Christopher Gooley / LessNeglect.com
+ * Copyright 2011 Christopher Gooley / LessNeglect.com
  *
  * Author(s):
  *  Christopher Gooley / LessNeglect (gooley@lessneglect.com)
@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using System.IO;
 using System.Net;
@@ -113,7 +114,7 @@ namespace LessNeglect
         // POST or PUT or something
         public static void SendData(string url, string method, List<KeyValuePair<string, string>> items)
         {
-            new ApiLogger() { Url = url, Method = method, Items = items }.Send();
+            new ApiLogger(url, method, items);
         }
 
         // GET
@@ -130,38 +131,72 @@ namespace LessNeglect
 
             private HttpWebRequest req;
 
+            const int DefaultTimeout = 10 * 1000; // 10 second timeout 
+
+            // Abort the request if the timer fires. 
+            private static void TimeoutCallback(object state, bool timedOut)
+            {
+                if (timedOut)
+                {
+                    //Console.WriteLine("request timed out");
+                    HttpWebRequest request = state as HttpWebRequest;
+                    if (request != null)
+                    {
+                        request.Abort();
+                    }
+                }
+            }
+
+            public ApiLogger(string url, string method, List<KeyValuePair<string, string>> items)
+            {
+                Url = url;
+                Method = method;
+                Items = items;
+                Send();
+            }
+
             public void Send()
             {
-                Console.WriteLine("ApiLogger.Send");
+                //Console.WriteLine("ApiLogger.Send");
                 req = (HttpWebRequest)WebRequest.Create(this.Url);
                 req.Method = this.Method;
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Accept = "text/javascript";
                 req.UserAgent = user_agent;
-                req.BeginGetRequestStream(this.RequestCallback, req);
+                var asyncResult = req.BeginGetRequestStream(this.RequestCallback, req);
+
+                // implement a timeout
+                ThreadPool.RegisterWaitForSingleObject(asyncResult.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, DefaultTimeout, true);
             }
             private void RequestCallback(IAsyncResult asyncResult)
             {
-                Console.WriteLine("ApiLogger.RequestCallback");
-                var data = GetPostData(Items);
+                try
+                {
+                    //Console.WriteLine("ApiLogger.RequestCallback");
+                    var data = GetPostData(Items);
 
-                Stream newStream = req.EndGetRequestStream(asyncResult);
-                newStream.Write(data, 0, data.Length);
-                newStream.Close();
+                    Stream newStream = req.EndGetRequestStream(asyncResult);
+                    newStream.Write(data, 0, data.Length);
+                    newStream.Close();
 
-                req.BeginGetResponse(this.ResponseCallback, req);
+                    var result = req.BeginGetResponse(this.ResponseCallback, req);
+                }
+                catch (Exception e)
+                {
+                }
             }
 
             private void ResponseCallback(IAsyncResult asyncResult)
             {
-                Console.WriteLine("ApiLogger.ResponseCallback");
+                //Console.WriteLine("ApiLogger.ResponseCallback");
                 try
                 {
-                    WebResponse response = req.EndGetResponse(asyncResult);                    
+                    WebResponse response = req.EndGetResponse(asyncResult);      
+                    response.Close();
                 }
                 catch (Exception e)
                 {
-
+                    Console.WriteLine(e.Message);
                 }
                 finally { }
             }
