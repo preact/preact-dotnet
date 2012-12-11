@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using System.IO;
 using System.Net;
@@ -48,11 +49,6 @@ namespace LessNeglect
 
             ASCIIEncoding encoding = new ASCIIEncoding();
             return encoding.GetBytes(postData);
-        }
-
-        public static JObject GetApiResponse(string url, string method, JObject obj)
-        {
-            return GetApiResponse(url, method, BuildFormData(obj));
         }
 
         public static List<KeyValuePair<string, string>> BuildFormData(JObject obj, string parent = null)
@@ -108,81 +104,103 @@ namespace LessNeglect
             }
         }
 
-        // POST or PUT or something
-        public static JObject GetApiResponse(string url, string method, List<KeyValuePair<string, string>> items)
+
+        public static void SendData(string url, string method, JObject obj)
         {
-            // notify the server that we've got a file to (maybe) upload
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            req.Method = method;
-            req.Accept = "text/javascript";
-            req.UserAgent = user_agent;
+            SendData(url, method, BuildFormData(obj));
+        }
 
-            var data = GetPostData(items);
 
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.ContentLength = data.Length;
-            Stream newStream = req.GetRequestStream();
-            // Send the data.
-            newStream.Write(data, 0, data.Length);
-            newStream.Close();
-
-            Stream streamResponse;
-
-            // grab the response
-            try
-            {
-                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-                streamResponse = response.GetResponseStream();
-            }
-            catch (HttpException ex)
-            {
-                switch (ex.GetHttpCode())
-                {
-                    case 400:
-                        {
-                            throw new HttpException(400, "API Requests must be signed. Refer to the documentation.");
-                        }
-                    case 403:
-                        {
-                            throw new HttpException(403, "Invalid request signature. Confirm you signed it correctly with the correct project_code and secret");
-                        }
-                    default:
-                        throw ex;
-                }
-            }
-
-            if (streamResponse != null)
-            {
-                // And read it out
-                StreamReader reader = new StreamReader(streamResponse);
-                string body = reader.ReadToEnd();
-                body = body.Trim("[]".ToCharArray());
-                return JObject.Parse(body);
-            }
-            else
-            {
-                return null;
-            }
+        // POST or PUT or something
+        public static void SendData(string url, string method, List<KeyValuePair<string, string>> items)
+        {
+            new ApiLogger(url, method, items);
         }
 
         // GET
-        public static JObject GetApiResponse(string url)
+        public static void SendData(string url)
         {
-            // notify the server that we've got a file to (maybe) upload
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-            req.Method = "GET";
-            req.Accept = "text/javascript";
-            req.UserAgent = user_agent;
 
-            // grab the response
-            HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-            Stream streamResponse = response.GetResponseStream();
+        }
 
-            // And read it out
-            StreamReader reader = new StreamReader(streamResponse);
-            string body = reader.ReadToEnd();
-            body = body.Trim("[]".ToCharArray());
-            return JObject.Parse(body);
+        private class ApiLogger
+        {
+            public string Url { get; set; }
+            public string Method { get; set; }
+            public List<KeyValuePair<string, string>> Items { get; set; }
+
+            private HttpWebRequest req;
+
+            const int DefaultTimeout = 10 * 1000; // 10 second timeout 
+
+            // Abort the request if the timer fires. 
+            private static void TimeoutCallback(object state, bool timedOut)
+            {
+                if (timedOut)
+                {
+                    //Console.WriteLine("request timed out");
+                    HttpWebRequest request = state as HttpWebRequest;
+                    if (request != null)
+                    {
+                        request.Abort();
+                    }
+                }
+            }
+
+            public ApiLogger(string url, string method, List<KeyValuePair<string, string>> items)
+            {
+                Url = url;
+                Method = method;
+                Items = items;
+                Send();
+            }
+
+            public void Send()
+            {
+                //Console.WriteLine("ApiLogger.Send");
+                req = (HttpWebRequest)WebRequest.Create(this.Url);
+                req.Method = this.Method;
+                req.ContentType = "application/x-www-form-urlencoded";
+                req.Accept = "text/javascript";
+                req.UserAgent = user_agent;
+                var asyncResult = req.BeginGetRequestStream(this.RequestCallback, req);
+
+                // implement a timeout
+                ThreadPool.RegisterWaitForSingleObject(asyncResult.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, DefaultTimeout, true);
+            }
+            private void RequestCallback(IAsyncResult asyncResult)
+            {
+                try
+                {
+                    //Console.WriteLine("ApiLogger.RequestCallback");
+                    var data = GetPostData(Items);
+
+                    Stream newStream = req.EndGetRequestStream(asyncResult);
+                    newStream.Write(data, 0, data.Length);
+                    newStream.Close();
+
+                    var result = req.BeginGetResponse(this.ResponseCallback, req);
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            private void ResponseCallback(IAsyncResult asyncResult)
+            {
+                //Console.WriteLine("ApiLogger.ResponseCallback");
+                try
+                {
+                    WebResponse response = req.EndGetResponse(asyncResult);      
+                    response.Close();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                finally { }
+            }
+
         }
     }
 }
