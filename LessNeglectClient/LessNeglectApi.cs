@@ -34,7 +34,7 @@ namespace LessNeglect
 {
     public class LessNeglectApi
     {
-        private static string api_endpoint = "https://lessneglect.com/api/v2";
+        private static string api_endpoint = "https://api.lessneglect.com/api/v2";
         private static Encoding encoding = Encoding.UTF8;
 
         private string ProjectCode { get; set; }
@@ -68,33 +68,33 @@ namespace LessNeglect
         }
         #endregion
 
-        public CoreResponse CreateMessage(MessageCreateRequest request)
+        public void CreateMessage(MessageCreateRequest request)
         {
             // sign the request 
             request.SignRequest(ProjectCode, ProjectApiSecret);
 
             string url = String.Format("{0}/events", api_endpoint);
-            return new CoreResponse(Helpers.GetApiResponse(url, "POST", JObject.FromObject(request)));
+            Helpers.SendData(url, "POST", JObject.FromObject(request));
         }
 
-        public CoreResponse CreateActionEvent(ActionEventCreateRequest request)
+        public void CreateActionEvent(ActionEventCreateRequest request)
         {
             // sign the request 
             request.SignRequest(ProjectCode, ProjectApiSecret);
 
             string url = String.Format("{0}/events", api_endpoint);
             JObject param = JObject.FromObject(request);
-            return new CoreResponse(Helpers.GetApiResponse(url, "POST", param));
+            Helpers.SendData(url, "POST", param);
         }
 
-        public CoreResponse UpdatePerson(PersonUpdateRequest request)
+        public void UpdatePerson(PersonUpdateRequest request)
         {
             // sign the request 
             request.SignRequest(ProjectCode, ProjectApiSecret);
 
             string url = String.Format("{0}/people", api_endpoint);
             JObject param = JObject.FromObject(request);
-            return new CoreResponse(Helpers.GetApiResponse(url, "POST", param));
+            Helpers.SendData(url, "POST", param);
         }
 
     }
