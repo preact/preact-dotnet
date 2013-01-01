@@ -35,7 +35,8 @@ namespace LessNeglect
 {
     internal static class Helpers
     {
-        private static string user_agent = "LessNeglect Client .NET v0.1.1";
+        private static string user_agent = "LessNeglect Client .NET v0.2";
+        public static string SourceApiVersion = "lessneglect-dotnet:0.2";
 
         public static byte[] GetPostData(List<KeyValuePair<string, string>> items)
         {
