@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using LessNeglect;
+
 namespace TestLogger
 {
     public class UserInfo
@@ -26,15 +28,11 @@ namespace TestLogger
         {
             try
             {
-                LessNeglect.LessNeglectApi.Client.CreateActionEvent(new LessNeglect.ActionEventCreateRequest()
-                {
-                    Event = new LessNeglect.ActionEvent()
-                    {
-                        Name = eventName,
-                        Note = note
-                    },
-                    Person = UserToPerson(user)
-                });
+                LessNeglectApi.Client.CreateActionEvent(new LessNeglect.ActionEventCreateRequest()
+                    .ForPerson(UserToPerson(user))
+                    .WithEvent(new LessNeglect.ActionEvent()
+                        .WithName(eventName)
+                        .WithNote(note)));
 
             }
             catch (Exception e)
@@ -47,11 +45,7 @@ namespace TestLogger
         {
             try
             {
-                LessNeglect.LessNeglectApi.Client.UpdatePerson(new LessNeglect.PersonUpdateRequest()
-                {
-                    Person = UserToPerson(user)
-                });
-
+                LessNeglectApi.Client.UpdatePerson(UserToPerson(user));
             }
             catch (Exception e)
             {
@@ -59,19 +53,18 @@ namespace TestLogger
             }
         }
 
-        public static LessNeglect.Person UserToPerson(UserInfo user)
+        #region Helpers
+        private static LessNeglect.Person UserToPerson(UserInfo user)
         {
             // TODO - update this to build a Person from your user data model
-            return new LessNeglect.Person()
-            {
-                Email = user.Email,
-                Name = user.FullName,
-                ExternalId = user.Username,
-                Properties = GetAccountPropertiesDictionary(user)
-            };
+            return new Person()
+                .WithEmail(user.Email)
+                .WithName(user.FullName)
+                .WithExternalId(user.Username)
+                .WithProperties(GetAccountPropertiesDictionary(user));
         }
 
-        public static Dictionary<string, object> GetAccountPropertiesDictionary(UserInfo user)
+        private static Dictionary<string, object> GetAccountPropertiesDictionary(UserInfo user)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
@@ -87,5 +80,6 @@ namespace TestLogger
 
             return properties;
         }
+        #endregion
     }
 }

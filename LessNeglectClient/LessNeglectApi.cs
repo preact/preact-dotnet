@@ -87,8 +87,10 @@ namespace LessNeglect
             Helpers.SendData(url, "POST", param);
         }
 
-        public void UpdatePerson(PersonUpdateRequest request)
+        public void UpdatePerson(Person person)
         {
+            PersonUpdateRequest request = new PersonUpdateRequest().WithPerson(person);
+
             // sign the request 
             request.SignRequest(ProjectCode, ProjectApiSecret);
 
