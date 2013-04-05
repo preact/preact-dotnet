@@ -37,8 +37,9 @@ namespace TestLogger
                 });
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -52,10 +53,10 @@ namespace TestLogger
                 });
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
             }
-
         }
 
         public static LessNeglect.Person UserToPerson(UserInfo user)
@@ -68,7 +69,6 @@ namespace TestLogger
                 ExternalId = user.Username,
                 Properties = GetAccountPropertiesDictionary(user)
             };
-
         }
 
         public static Dictionary<string, object> GetAccountPropertiesDictionary(UserInfo user)

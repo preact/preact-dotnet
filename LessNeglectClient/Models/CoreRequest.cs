@@ -33,25 +33,25 @@ namespace LessNeglect
     public class CoreRequest
     {
         [JsonProperty(PropertyName = "project_code")]
-        public string ProjectCode { get; set; }
+        public string ProjectCode { get; private set; }
 
         [JsonProperty(PropertyName = "timestamp")]
-        public string Timestamp { get; set; }
+        public string Timestamp { get; private set; }
 
         [JsonProperty(PropertyName = "token")]
-        public string Token { get; set; }
+        public string Token { get; private set; }
 
         [JsonProperty(PropertyName = "signature")]
-        public string Signature { get; set; }
+        public string Signature { get; private set; }
 
-        public void SignRequest(string code, string key)
+        public void SignRequest(string projectCode, string secretKey)
         {
-            ProjectCode = code;
+            ProjectCode = projectCode;
             Timestamp = DateTime.Now.Ticks.ToString();
             Token = Guid.NewGuid().ToString("N");
 
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-            byte[] keyByte = encoding.GetBytes(key);
+            byte[] keyByte = encoding.GetBytes(secretKey);
             HMACSHA256 hmacsha256 = new HMACSHA256(keyByte);
 
             byte[] messageBytes = encoding.GetBytes(string.Format("{0}{1}", Timestamp, Token));

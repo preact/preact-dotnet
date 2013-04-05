@@ -51,9 +51,6 @@ namespace LessNeglect
         [JsonProperty(PropertyName = "magnitude")]
         public int Magnitude { get; set; }
 
-        //[JsonProperty(PropertyName = "email_subject")]
-        //public string EmailSubject { get; set; }
-
         [JsonProperty(PropertyName = "links")]
         public PersonActionLink[] Links { get; set; }
     }

@@ -34,6 +34,5 @@ namespace LessNeglect
 
         [JsonProperty(PropertyName = "event")]
         public Message Message { get; set; }
-
     }
 }
