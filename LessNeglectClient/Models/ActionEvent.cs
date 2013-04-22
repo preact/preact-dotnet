@@ -53,5 +53,8 @@ namespace LessNeglect
 
         [JsonProperty(PropertyName = "links")]
         public PersonActionLink[] Links { get; set; }
+
+        [JsonProperty(PropertyName = "extras")]
+        public Dictionary<string, object> Extras { get; set; }
     }
 }

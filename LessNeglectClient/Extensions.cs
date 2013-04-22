@@ -59,6 +59,12 @@ namespace LessNeglect
             actionEvent.Links = links;
             return actionEvent;
         }
+
+        public static ActionEvent WithExtras(this ActionEvent actionEvent, Dictionary<string, object> extras)
+        {
+            actionEvent.Extras = extras;
+            return actionEvent;
+        }
         #endregion
 
         #region Person
