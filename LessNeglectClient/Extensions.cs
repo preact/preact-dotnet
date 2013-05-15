@@ -60,6 +60,18 @@ namespace LessNeglect
             return actionEvent;
         }
 
+        public static ActionEvent WithAccount(this ActionEvent actionEvent, Account account)
+        {
+            actionEvent.Account = account;
+            return actionEvent;
+        }
+
+        public static ActionEvent WithRevenue(this ActionEvent actionEvent, decimal revenue)
+        {
+            actionEvent.Revenue = revenue;
+            return actionEvent;
+        }
+
         public static ActionEvent WithExtras(this ActionEvent actionEvent, Dictionary<string, object> extras)
         {
             actionEvent.Extras = extras;
@@ -83,6 +95,24 @@ namespace LessNeglect
         public static Person WithExternalId(this Person person, string externalId)
         {
             person.ExternalId = externalId;
+            return person;
+        }
+
+        public static Person WithAccountId(this Person person, string accountId)
+        {
+            person.AccountId = accountId;
+            return person;
+        }
+
+        public static Person WithAccountName(this Person person, string accountName)
+        {
+            person.AccountName = accountName;
+            return person;
+        }
+
+        public static Person WithCreationDateTime(this Person person, DateTime creationDateTime)
+        {
+            person.CreationDateTime = creationDateTime;
             return person;
         }
 
@@ -124,6 +154,20 @@ namespace LessNeglect
         {
             message.Label = label;
             return message;
+        }
+        #endregion
+
+        #region Account
+        public static Account WithId(this Account account, string id)
+        {
+            account.Id = id;
+            return account;
+        }
+
+        public static Account WithName(this Account account, string name)
+        {
+            account.Name = name;
+            return account;
         }
         #endregion
     }
