@@ -31,10 +31,10 @@ namespace LessNeglect
 {
     public class CoreResponse
     {
-        public bool Success { get; set; }
-        public string Error { get; set; }
+        public bool Success { get; private set; }
+        public string Error { get; private set; }
 
-        public JObject RawResponse { get; set; }
+        public JObject RawResponse { get; private set; }
 
         public CoreResponse(JObject response)
         {

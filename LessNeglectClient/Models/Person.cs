@@ -39,6 +39,15 @@ namespace LessNeglect
         [JsonProperty(PropertyName = "external_identifier")]
         public string ExternalId { get; set; }
 
+        [JsonProperty(PropertyName = "account_id")]
+        public string AccountId { get; set; }
+
+        [JsonProperty(PropertyName = "account_name")]
+        public string AccountName { get; set; }
+
+        [JsonProperty(PropertyName = "created_at")]
+        public DateTime CreationDateTime { get; set; }
+
         [JsonProperty(PropertyName = "properties")]
         public Dictionary<string, object> Properties { get; set; }
     }
