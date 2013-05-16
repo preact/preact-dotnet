@@ -1,6 +1,6 @@
-LessNeglect C# Client
+Preact C# Client
 ===
-Allow your .NET app to easily submit server-side messages and events to LessNeglect.
+Allow your .NET app to easily submit server-side messages and events to Preact.
 
 Usage
 ---
@@ -10,26 +10,26 @@ Add your project code and secret to your web.config:
 ```xml
   <appSettings>
     ...
-    <add key="LessNeglectProjectCode" value="asdfasdf"/>
-    <add key="LessNeglectProjectApiSecret" value="asdfasdf12341234"/>
+    <add key="PreactProjectCode" value="asdfasdf"/>
+    <add key="PreactProjectApiSecret" value="asdfasdf12341234"/>
     ...
   </appSettings>
 ```
 
-Add a Reference to the LessNeglect library in your Project (either directly to the source, or compile it first and include the .dll)
+Add a Reference to the Preact library in your Project (either directly to the source, or compile it first and include the .dll)
 
 Then, log events as they happen using the client:
 
 ```csharp
-  LessNeglect.LessNeglectApi.Client.CreateActionEvent(new LessNeglect.ActionEventCreateRequest()
+  Preact.Api.Client.LogEvent(new Preact.ActionEventCreateRequest()
   {
-      Event = new LessNeglect.ActionEvent()
+      Event = new Preact.ActionEvent()
       {
           Name = "event-name"
       },
-      Person = new LessNeglect.Person()
+      Person = new Preact.Person()
       {
-          Email = "gooley@foliohd.com",
+          Email = "gooley@preact.io",
           Name = "Christopher Gooley",
           ExternalId = "gooley"
       }
@@ -39,13 +39,13 @@ Then, log events as they happen using the client:
 Sample Helper Class
 ---
 
-We suggest you create a simple helper class such as neglect.cs to convert your User data model into a LessNeglect Person and submit the event.
+We suggest you create a simple helper class such as preact.cs to convert your User data model into a Preact Person and submit the event.
 
-Here's a nice sample gist: https://gist.github.com/3738425
+Here's a nice sample gist: https://gist.github.com/azcoov/5596023
 
 And then, you can log stuff nice and easily:
 ```csharp
-Neglect.LogEvent(currentUserObject, "uploaded-image")
+Preact.LogEvent(currentUserObject, "updated-profile")
 ```
 
-Copyright (c) 2011-2012 Christopher Gooley. See LICENSE.txt for further details.
+Copyright (c) 2011-2013 Preact. See LICENSE.txt for further details.
