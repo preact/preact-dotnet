@@ -46,15 +46,18 @@ namespace LessNeglect
         public string Note { get; set; }
 
         [JsonProperty(PropertyName = "revenue")]
-        public int Revenue { get; set; }
+        public decimal Revenue { get; set; }
         
         [JsonProperty(PropertyName = "magnitude")]
         public int Magnitude { get; set; }
 
-        //[JsonProperty(PropertyName = "email_subject")]
-        //public string EmailSubject { get; set; }
+        [JsonProperty(PropertyName = "account")]
+        public Account Account { get; set; }
 
         [JsonProperty(PropertyName = "links")]
         public PersonActionLink[] Links { get; set; }
+
+        [JsonProperty(PropertyName = "extras")]
+        public Dictionary<string, object> Extras { get; set; }
     }
 }

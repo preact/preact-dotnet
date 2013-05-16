@@ -8,7 +8,7 @@ using LessNeglect;
 
 namespace TestLogger
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
@@ -17,7 +17,7 @@ namespace TestLogger
                 Console.WriteLine("-------------\r\nNOTE: You should update the App.config to use your own code and key\r\n-------------\r\n");
             }
 
-            var u = new UserInfo()
+            UserInfo u = new UserInfo()
             {
                 FullName = "Christopher Gooley",
                 Email = "gooley@lessneglect.com",

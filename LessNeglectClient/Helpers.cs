@@ -35,7 +35,7 @@ namespace LessNeglect
 {
     internal static class Helpers
     {
-        private static string user_agent = "LessNeglect Client .NET v0.2";
+        private static string UserAgent = "LessNeglect Client .NET v0.2";
         public static string SourceApiVersion = "lessneglect-dotnet:0.2";
 
         public static byte[] GetPostData(List<KeyValuePair<string, string>> items)
@@ -105,23 +105,15 @@ namespace LessNeglect
             }
         }
 
-
         public static void SendData(string url, string method, JObject obj)
         {
             SendData(url, method, BuildFormData(obj));
         }
 
-
         // POST or PUT or something
         public static void SendData(string url, string method, List<KeyValuePair<string, string>> items)
         {
             new ApiLogger(url, method, items);
-        }
-
-        // GET
-        public static void SendData(string url)
-        {
-
         }
 
         private class ApiLogger
@@ -163,12 +155,13 @@ namespace LessNeglect
                 req.Method = this.Method;
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.Accept = "text/javascript";
-                req.UserAgent = user_agent;
+                req.UserAgent = UserAgent;
                 var asyncResult = req.BeginGetRequestStream(this.RequestCallback, req);
 
                 // implement a timeout
                 ThreadPool.RegisterWaitForSingleObject(asyncResult.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, DefaultTimeout, true);
             }
+
             private void RequestCallback(IAsyncResult asyncResult)
             {
                 try
@@ -184,6 +177,7 @@ namespace LessNeglect
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                 }
             }
 
@@ -201,7 +195,6 @@ namespace LessNeglect
                 }
                 finally { }
             }
-
         }
     }
 }

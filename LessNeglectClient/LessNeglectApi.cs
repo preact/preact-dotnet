@@ -45,19 +45,19 @@ namespace LessNeglect
             this(System.Configuration.ConfigurationManager.AppSettings["LessNeglectProjectCode"],
                 System.Configuration.ConfigurationManager.AppSettings["LessNeglectProjectApiSecret"]) { }
 
-        public LessNeglectApi(string code, string secret)
+        public LessNeglectApi(string projectCode, string secretKey)
         {
-            if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(secret))
+            if (string.IsNullOrEmpty(projectCode) || string.IsNullOrEmpty(secretKey))
                 throw new ArgumentException("Missing ProjectCode or ProjectApiSecret");
 
-            ProjectCode = code;
-            ProjectApiSecret = secret;
+            ProjectCode = projectCode;
+            ProjectApiSecret = secretKey;
         }
         #endregion
 
-        #region Static helpers
-
+        #region Static Helpers
         private static LessNeglectApi _client;
+
         public static LessNeglectApi Client
         {
             get
@@ -87,8 +87,10 @@ namespace LessNeglect
             Helpers.SendData(url, "POST", param);
         }
 
-        public void UpdatePerson(PersonUpdateRequest request)
+        public void UpdatePerson(Person person)
         {
+            PersonUpdateRequest request = new PersonUpdateRequest().WithPerson(person);
+
             // sign the request 
             request.SignRequest(ProjectCode, ProjectApiSecret);
 
@@ -96,9 +98,5 @@ namespace LessNeglect
             JObject param = JObject.FromObject(request);
             Helpers.SendData(url, "POST", param);
         }
-
     }
-
-
-
 }
