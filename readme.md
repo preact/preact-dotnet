@@ -34,7 +34,7 @@ Then, log events as they happen using the client:
       {
           Email = "gooley@preact.io",
           Name = "Christopher Gooley",
-          ExternalId = "gooley"
+          Uid = "gooley"
       }
   });
 ```
