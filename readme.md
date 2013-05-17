@@ -2,6 +2,9 @@ Preact C# Client
 ===
 Allow your .NET app to easily submit server-side messages and events to Preact.
 
+You can optionally install the Preact Client from [NuGet](http://nuget.org/packages/Preact/).
+
+
 Usage
 ---
 
