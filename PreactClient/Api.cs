@@ -35,7 +35,8 @@ namespace Preact
 {
     public class Api
     {
-        private static string api_endpoint = "https://api.preact.io/api/v2/events";
+        private static string api_endpoint_events = "https://api.preact.io/api/v2/events";
+        private static string api_endpoint_metrics = "https://api.preact.io/api/v2/metrics";
         private static Encoding encoding = Encoding.UTF8;
 
         private string ProjectCode { get; set; }
@@ -72,7 +73,16 @@ namespace Preact
         public void LogEvent(ActionEventCreateRequest request)
         {
             JObject param = JObject.FromObject(request);
-            Helpers.SendData(ProjectCode, ProjectApiSecret, api_endpoint, "POST", param);
+            Helpers.SendData(ProjectCode, ProjectApiSecret, api_endpoint_events, "POST", param);
+            
         }
+
+        public void LogBackgroundSignal(BackgroundSignalRequest request)
+        {
+            JObject param = JObject.FromObject(request);
+            Helpers.SendData(ProjectCode, ProjectApiSecret, api_endpoint_metrics, "POST", param);
+        }
+
+
     }
 }

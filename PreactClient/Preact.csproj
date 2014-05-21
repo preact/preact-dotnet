@@ -52,6 +52,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\ActionEventCreateRequest.cs" />
+    <Compile Include="Models\BackgroundSignalRequest.cs" />
     <Compile Include="Models\PersonActionLink.cs" />
     <Compile Include="Models\ActionEvent.cs" />
     <Compile Include="Models\Person.cs" />

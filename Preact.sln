@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Preact", "PreactClient\Preact.csproj", "{D4BA2C88-670D-426A-AC66-2857FD11B017}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Preact Api Consumer", "Preact Api Consumer\Preact Api Consumer.csproj", "{90FF590C-1A58-4A79-AA08-58A295F43D19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{D4BA2C88-670D-426A-AC66-2857FD11B017}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4BA2C88-670D-426A-AC66-2857FD11B017}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4BA2C88-670D-426A-AC66-2857FD11B017}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90FF590C-1A58-4A79-AA08-58A295F43D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90FF590C-1A58-4A79-AA08-58A295F43D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90FF590C-1A58-4A79-AA08-58A295F43D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90FF590C-1A58-4A79-AA08-58A295F43D19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
