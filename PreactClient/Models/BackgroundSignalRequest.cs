@@ -19,7 +19,6 @@ namespace Preact
         public int Value { get; set; }
 
         [JsonProperty(PropertyName = "ts")]
-        public string Timestamp { get { return DateTime.Now.Ticks.ToString(); } }
-
+        public double Timestamp { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Preact
 {
@@ -10,5 +11,14 @@ namespace Preact
 
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "license_type")]
+        public string LicenseType { get; set; }
+
+        [JsonProperty(PropertyName = "license_count")]
+        public int LicenseCount { get; set; }
+
+        [JsonProperty(PropertyName = "license_renewal")]
+        public string LicenseRenewal { get; set; }
     }
 }

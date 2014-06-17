@@ -30,6 +30,9 @@ namespace Preact
 {
     public class ActionEventCreateRequest : CoreRequest
     {
+        [JsonProperty(PropertyName = "account")]
+        public Account Account { get; set; }
+
         [JsonProperty(PropertyName = "person")]
         public Person Person { get; set; }
 
