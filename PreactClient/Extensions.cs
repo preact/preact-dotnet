@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2013 Preact / Preact.io
+ * Copyright 2014 Preact / Preact.io
  *
  * Author(s):
  *  Christopher Gooley / Preact (gooley@preact.io)
@@ -92,6 +92,24 @@ namespace Preact
         public static Person WithUid(this Person person, string uid)
         {
             person.Uid = uid;
+            return person;
+        }
+
+        public static Person WithTwitterId(this Person person, string twitterId)
+        {
+            person.TwitterId = twitterId;
+            return person;
+        }
+
+        public static Person WithFacebookId(this Person person, string facebookId)
+        {
+            person.FacebookId = facebookId;
+            return person;
+        }
+
+        public static Person WithStripeId(this Person person, string stripeId)
+        {
+            person.StripeId = stripeId;
             return person;
         }
 

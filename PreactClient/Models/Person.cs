@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2013 Preact / Preact.io
+ * Copyright 2014 Preact / Preact.io
  *
  * Author(s):
  *  Christopher Gooley / Preact (gooley@preact.io)
@@ -19,29 +19,37 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 
 namespace Preact
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Person
     {
+        /* Required Fields */
         [JsonProperty(PropertyName = "email")]
         public string Email { get; set; }
 
+        /* Strongly Suggested Fields */
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "created_at")]
+        public DateTime CreatedAt { get; set; }
 
         [JsonProperty(PropertyName = "uid")]
         public string Uid { get; set; }
 
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; set; }
+        /* Optional Fields */
+        [JsonProperty(PropertyName = "twitter_id")]
+        public string TwitterId { get; set; }
+
+        [JsonProperty(PropertyName = "facebook_id")]
+        public string FacebookId { get; set; }
+
+        [JsonProperty(PropertyName = "stripe_id")]
+        public string StripeId { get; set; }
 
         [JsonProperty(PropertyName = "properties")]
         public Dictionary<string, object> Properties { get; set; }
