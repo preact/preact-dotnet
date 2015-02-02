@@ -37,7 +37,7 @@ namespace Preact_Api_Consumer
                             Name = accountNameTextbox.Text,
                             Id = accountIdTextbox.Text,
                             LicenseType = "paying",
-                            LicenseRenewal = DateTime.UtcNow.ToString("yyyy-MM-dd")
+                            LicenseRenewal = DateTime.UtcNow
                         },
                         Event = new Preact.ActionEvent()
                         {
