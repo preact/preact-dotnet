@@ -36,7 +36,7 @@ namespace Preact
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonProperty(PropertyName = "uid")]
         public string Uid { get; set; }

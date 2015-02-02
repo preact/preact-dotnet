@@ -41,7 +41,7 @@ namespace Preact
         public string Note { get; set; }
 
         [JsonProperty(PropertyName = "revenue")]
-        public decimal Revenue { get; set; }
+        public decimal? Revenue { get; set; }
 
         [JsonProperty(PropertyName = "account")]
         public Account Account { get; set; }
