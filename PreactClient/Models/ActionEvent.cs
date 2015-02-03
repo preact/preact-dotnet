@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2013 Preact / Preact.io
+ * Copyright 2014 Preact / Preact.io
  *
  * Author(s):
  *  Christopher Gooley / Preact (gooley@preact.io)
@@ -26,7 +26,7 @@ namespace Preact
     [JsonObject(MemberSerialization.OptIn)]
     public class ActionEvent
     {
-        /* Required Fields*/
+        /* Required Fields */
         [JsonProperty(PropertyName = "source")]
         public string Source = Helpers.SourceApiVersion;
 
@@ -36,12 +36,12 @@ namespace Preact
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
-        /* Optional Fields*/
+        /* Optional Fields */
         [JsonProperty(PropertyName = "note")]
         public string Note { get; set; }
 
         [JsonProperty(PropertyName = "revenue")]
-        public decimal Revenue { get; set; }
+        public decimal? Revenue { get; set; }
 
         [JsonProperty(PropertyName = "account")]
         public Account Account { get; set; }
