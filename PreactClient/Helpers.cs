@@ -36,8 +36,8 @@ namespace Preact
 {
     internal static class Helpers
     {
-        private static string UserAgent = "Preact Client .NET v0.3";
-        public static string SourceApiVersion = "preact-dotnet:0.3";
+        private static string UserAgent = "Preact Client .NET v0.4";
+        public static string SourceApiVersion = "preact-dotnet:0.4";
 
         public static byte[] GetPostData(List<KeyValuePair<string, string>> items)
         {
